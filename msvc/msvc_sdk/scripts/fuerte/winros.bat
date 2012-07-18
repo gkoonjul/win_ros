@@ -94,6 +94,7 @@ echo.
 echo If not building the 'all' target, make sure the others
 echo are called in the correct sequence.
 echo.
+echo   clean      clean the workspace (remove build and source directories)
 echo   all        download, configure, build and install
 echo   download   rosinstall minimal set of generators and comms stacks
 echo   configure  run cmake on the comms stacks
@@ -241,7 +242,7 @@ echo.
 @echo on
 rm -rf %COMMS_INSTALL_PREFIX%
 rm -rf %DIR_COMMS_BUILD%
-rm -rf %DIR_COMMMS_SOURCES%
+rm -rf %DIR_COMMS_SOURCES%
 @echo off
 goto End
 
@@ -258,7 +259,7 @@ if "%BUILD%"=="stable" (
 )
 cd %PWD%
 if X%TARGET%==Xall (
-  goto SdkConfigure
+  goto CommsConfigure
 ) else (
   echo.
   echo "You may now proceed with 'winros comms configure'"
@@ -272,6 +273,9 @@ echo.
 call %DIR_COMMS_SOURCES%\setup.bat
 if not exist %DIR_COMMS_BUILD% mkdir %DIR_COMMS_BUILD%
 cd %DIR_COMMS_BUILD%
+echo %DIR_COMMS_BUILD%
+echo %DIR_COMMS_SOURCES%
+
 rem 1) CATKIN_BUILD_STACKS and BLACKLIST_STACKS are semicolon separated list of stack names (ALL and None are the defaults).
 rem   e.g. -DCATKIN_BUILD_STACKS:STRING="catkin;genmsg;gencpp;genpy"
 cmake -G "NMake Makefiles" ^
